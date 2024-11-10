@@ -8,16 +8,15 @@ import 'package:spec_app/features/projects/data/models/project_model.dart';
 import '../providers/projects_provider.dart';
 
 class ProjectMaintenance extends ConsumerWidget {
-  const ProjectMaintenance({required this.project, required this.maintenanceMode, super.key});
+  const ProjectMaintenance({required this.maintenanceMode, super.key});
 
-  final ProjectModel project;
   final MaintenanceMode maintenanceMode;
 
   static final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var project = ref.watch(projectsDataProvider).selectedProject;
+    ProjectModel? project = ref.watch(projectsDataProvider).selectedProject;
     return Dialog.fullscreen(
         child: Scaffold(
       appBar: AppBar(
@@ -25,8 +24,9 @@ class ProjectMaintenance extends ConsumerWidget {
           title: Text(maintenanceMode == MaintenanceMode.create ? "Új Projekt" : "Projekt szerkesztése"),
           actions: [
             MaterialButton(
-                onPressed: () =>
-                    ref.read(projectsDataProvider.notifier).saveProject(maintenanceMode).then((value) => context.pop()),
+                onPressed: () {
+                  save(ref, context);
+                },
                 child: Text("Mentés"))
           ]),
       body: Form(
@@ -37,34 +37,80 @@ class ProjectMaintenance extends ConsumerWidget {
               child: Column(
                 children: [
                   BaseTextFormField(
-                    initialValue: project?.maintainer,
+                    initialValue: project!.maintainer,
                     labelText: 'Karbantartó',
-                    onChanged: (String text) {},
+                    validator: (String? text) {
+                      if (text == null || text.isEmpty) {
+                        return "Nem lehet üres";
+                      }
+                      return null;
+                    },
+                    onChanged: (String text) =>
+                        ref.watch(projectsDataProvider.notifier).updateProject(project.copyWith(maintainer: text)),
                   ),
                   BaseTextFormField(
-                    initialValue: project?.address,
+                    initialValue: project.address,
                     labelText: 'Helyszín',
-                    onChanged: (String text) {},
+                    validator: (String? text) {
+                      if (text == null || text.isEmpty) {
+                        return "Nem lehet üres";
+                      }
+                      return null;
+                    },
+                    onChanged: (String text) =>
+                        ref.watch(projectsDataProvider.notifier).updateProject(project.copyWith(address: text)),
                   ),
                   BaseTextFormField(
-                    initialValue: project?.contractNr,
+                    initialValue: project.contractNr,
                     labelText: 'Szerződésszám',
-                    onChanged: (String text) {},
+                    validator: (String? text) {
+                      if (text == null || text.isEmpty) {
+                        return "Nem lehet üres";
+                      }
+                      return null;
+                    },
+                    onChanged: (String text) =>
+                        ref.watch(projectsDataProvider.notifier).updateProject(project.copyWith(contractNr: text)),
                   ),
                   BaseTextFormField(
-                    initialValue: project?.operator,
+                    initialValue: project.operator,
                     labelText: 'Szerelést végző személy neve',
-                    onChanged: (String text) {},
+                    validator: (String? text) {
+                      if (text == null || text.isEmpty) {
+                        return "Nem lehet üres";
+                      }
+                      return null;
+                    },
+                    onChanged: (String text) =>
+                        ref.watch(projectsDataProvider.notifier).updateProject(project.copyWith(operator: text)),
                   ),
                   BaseTextFormField(
-                    initialValue: project?.operator,
+                    initialValue: project.certNumber,
+                    textInputAction: TextInputAction.done,
+                    validator: (String? text) {
+                      if (text == null || text.isEmpty) {
+                        return "Nem lehet üres";
+                      }
+                      return null;
+                    },
+                    onFieldSubmitted: (text) => save(ref, context),
                     labelText: 'Tűzvédelmi vizsg. biz. száma',
-                    onChanged: (String text) {},
+                    onChanged: (String text) =>
+                        ref.watch(projectsDataProvider.notifier).updateProject(project.copyWith(certNumber: text)),
                   )
                 ],
               ),
             ),
           )),
     ));
+  }
+
+  void save(WidgetRef ref, BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      ref.read(projectsDataProvider.notifier).saveProject(maintenanceMode).then((value) {
+        ref.watch(projectsDataProvider.notifier).getProjects();
+        context.pop();
+      });
+    }
   }
 }

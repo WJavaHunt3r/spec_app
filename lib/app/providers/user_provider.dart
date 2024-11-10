@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:work_hu/features/login/data/model/user_model.dart';
-import 'package:work_hu/features/utils.dart';
+import 'package:spec_app/app/utils.dart';
+import 'package:spec_app/features/users/data/model/user_model.dart';
 
 final userDataProvider = StateNotifierProvider<UserDataNotifier, UserModel?>((ref) => UserDataNotifier());
 

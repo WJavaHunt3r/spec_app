@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:spec_app/app/providers/user_provider.dart';
 import 'package:spec_app/features/projects/view/projects_page.dart';
+import 'package:spec_app/features/users/data/model/user_model.dart';
 
 import '../../features/login/view/login_page.dart';
 
@@ -43,19 +45,15 @@ final routerProvider = Provider<GoRouter>((ref) {
         //     ]),
       ],
       redirect: (BuildContext context, GoRouterState state) async {
-        // UserModel? user = ref.read(userDataProvider);
+        UserModel? user = ref.read(userDataProvider);
         // try {
         //   user ??= await ref.read(loginDataProvider.notifier).loginWithSavedData();
         // } on DioException catch (e) {
         //   user = null;
         // }
-        // if (user == null && state.matchedLocation.contains("/login")) {
-        //     return "/login";
-        // }
-        //
-        // if (state.matchedLocation.contains("/admin/") && !user.isAdmin()) {
-        //   return "/home";
-        // }
+        if (user == null) {
+          return "/login";
+        }
 
         return state.matchedLocation;
       });

@@ -22,15 +22,17 @@ class ProjectsLayout extends ConsumerWidget {
                 title: Text("${current.maintainer} (${current.address})"),
                 subtitle: Text(current.operator.toString()),
                 trailing: IconButton(
-                  onPressed: () => () => showGeneralDialog(
-                      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
-                      transitionDuration: Duration(milliseconds: 200),
-                      barrierColor: Theme.of(context).colorScheme.primary,
-                      context: context,
-                      pageBuilder: (context, animation, secAnimation) =>
-                          ProjectMaintenance(project: current, maintenanceMode: MaintenanceMode.edit)),
-                  icon: Icon(Icons.edit),
-                ),
+                    onPressed: () {
+                      ref.read(projectsDataProvider.notifier).updateProject(current);
+                      showGeneralDialog(
+                          barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+                          transitionDuration: Duration(milliseconds: 200),
+                          barrierColor: Theme.of(context).colorScheme.primary,
+                          context: context,
+                          pageBuilder: (context, animation, secAnimation) =>
+                              ProjectMaintenance(maintenanceMode: MaintenanceMode.edit));
+                    },
+                    icon: Icon(Icons.edit)),
               ));
             }));
   }

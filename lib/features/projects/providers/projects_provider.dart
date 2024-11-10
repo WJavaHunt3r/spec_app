@@ -43,7 +43,7 @@ class ProjectsDataNotifier extends StateNotifier<ProjectsState> {
       if (mode == MaintenanceMode.create) {
         await projects.add(json).then((value) => getProjects());
       } else if (mode == MaintenanceMode.edit) {
-        await projects.doc(p.id).set(p);
+        await projects.doc(p.id).set(p.toJson());
       }
     }
   }
