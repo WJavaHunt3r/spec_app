@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "873908260201",
+    "project_id": "specapp-4d24b",
+    "storage_bucket": "specapp-4d24b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:873908260201:android:9e0a8b4a98b4efeaa381f8",
+        "android_client_info": {
+          "package_name": "com.epodox.spec_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATkVdgRP6NLfnTg5W7yl-E69PE9k5Y2Bk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

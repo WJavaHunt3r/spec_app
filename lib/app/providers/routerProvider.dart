@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:spec_app/features/projects/view/projects_page.dart';
+
+import '../../features/login/view/login_page.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -9,16 +12,16 @@ final routerProvider = Provider<GoRouter>((ref) {
       routes: <GoRoute>[
         GoRoute(
           path: '/',
-          pageBuilder: (BuildContext context, GoRouterState state) => NoTransitionPage(child: ProjectsPage()),
+          builder: (BuildContext context, GoRouterState state) => ProjectsPage(),
         ),
         GoRoute(
           path: '/home',
-          pageBuilder: (BuildContext context, GoRouterState state) => NoTransitionPage(child: ProjectsPage()),
+          builder: (BuildContext context, GoRouterState state) => ProjectsPage(),
         ),
         GoRoute(
           path: '/login',
-          pageBuilder: (BuildContext context, GoRouterState state) {
-            return  LoginPage();
+          builder: (BuildContext context, GoRouterState state) {
+            return LoginPage();
           },
         ),
         // GoRoute(
@@ -40,19 +43,19 @@ final routerProvider = Provider<GoRouter>((ref) {
         //     ]),
       ],
       redirect: (BuildContext context, GoRouterState state) async {
-        UserModel? user = ref.read(userDataProvider);
-        try {
-          user ??= await ref.read(loginDataProvider.notifier).loginWithSavedData();
-        } on DioException catch (e) {
-          user = null;
-        }
-        if (user == null && state.matchedLocation.contains("/login")) {
-            return "/login";
-        }
-
-        if (state.matchedLocation.contains("/admin/") && !user.isAdmin()) {
-          return "/home";
-        }
+        // UserModel? user = ref.read(userDataProvider);
+        // try {
+        //   user ??= await ref.read(loginDataProvider.notifier).loginWithSavedData();
+        // } on DioException catch (e) {
+        //   user = null;
+        // }
+        // if (user == null && state.matchedLocation.contains("/login")) {
+        //     return "/login";
+        // }
+        //
+        // if (state.matchedLocation.contains("/admin/") && !user.isAdmin()) {
+        //   return "/home";
+        // }
 
         return state.matchedLocation;
       });
