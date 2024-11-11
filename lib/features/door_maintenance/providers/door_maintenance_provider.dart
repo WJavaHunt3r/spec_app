@@ -24,7 +24,7 @@ class DoorMaintenanceDataNotifier extends StateNotifier<DoorMaintenanceState> {
     var mode = state.mode;
     var door = state.door;
     try {
-      var json = door!.toJson();
+      var json = door.toJson();
       if (mode == MaintenanceMode.create) {
         await doors.add(json);
       } else if (mode == MaintenanceMode.edit) {
