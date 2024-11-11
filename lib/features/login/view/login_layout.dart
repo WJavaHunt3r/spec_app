@@ -43,7 +43,6 @@ class LoginLayout extends ConsumerWidget {
                     child: AutofillGroup(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
-                        // mainAxisSize: MainAxisSize.max,
                         children: [
                           BaseDropdownField<UserModel>(
                             labelText: 'Felhasználó',

@@ -11,6 +11,7 @@ class SpecApp extends ConsumerWidget {
     return MaterialApp.router(
         title: 'SpecApp',
         debugShowCheckedModeBanner: false,
+        locale: const Locale("hu", "HU"),
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFD32F2F)),
           useMaterial3: true,

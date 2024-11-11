@@ -41,7 +41,7 @@ class LoginDataNotifier extends StateNotifier<LoginState> {
   }
 
   setUser(UserModel u) {
-    state = state.copyWith(username: u.username!,selectedUser: u, modelState: ModelState.empty);
+    state = state.copyWith(username: u.username!, selectedUser: u, modelState: ModelState.empty);
   }
 
   setPassword(String password) {

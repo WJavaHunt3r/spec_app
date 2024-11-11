@@ -17,53 +17,64 @@ class CorrosionIntegrityStep extends BaseStep {
     return [
       IsOkField(
         labelText: "Rendben van?",
-        onChanged: (text) => updateDoor(door.copyWith(corrosionIntegrity: text.toString()), ref),
+        onChanged: (text) => updateDoor(door.copyWith(corrosionIntegrity: text), ref),
       ),
-      BaseTextFormField(
-        labelText: "Mi a hiba?",
-        keyBoardType: TextInputType.number,
-        onChanged: (text) => updateDoor(door.copyWith(corrIntIssue: text), ref),
-      ),
-      YesNoField(labelText: "Javítható?", onChanged: (text) => updateDoor(door.copyWith(corrIntFixable: text), ref)),
-      if (door.corrIntFixable == null || door.corrIntFixable! ) SizedBox() else Column(
-        children: [
-          BaseTextFormField(
-            labelText: "Hogyan?",
-            keyBoardType: TextInputType.number,
-            onChanged: (text) => updateDoor(door.copyWith(corrIntFix: text), ref),
-          ),
-          BaseTextFormField(
-            labelText: "TBM szélessége",
-            keyBoardType: TextInputType.number,
-            onChanged: (text) => updateDoor(door.copyWith(corrIntTBMWidth: num.tryParse(text)), ref),
-          ),
-          BaseTextFormField(
-            labelText: "TBM magassága",
-            keyBoardType: TextInputType.number,
-            onChanged: (text) => updateDoor(door.copyWith(corrIntTBMHeight: num.tryParse(text)), ref),
-          ),
-          BaseTextFormField(
-            labelText: "Lap falcméret szélessége",
-            keyBoardType: TextInputType.number,
-            onChanged: (text) => updateDoor(door.copyWith(corrIntRebateWidth: num.tryParse(text)), ref),
-          ),
-          BaseTextFormField(
-            labelText: "Lap falcméret magasság",
-            keyBoardType: TextInputType.number,
-            onChanged: (text) => updateDoor(door.copyWith(corrIntRebateHeight: num.tryParse(text)), ref),
-          ),
-          BaseTextFormField(
-            labelText: "Lap külméret szélessége",
-            keyBoardType: TextInputType.number,
-            onChanged: (text) => updateDoor(door.copyWith(corrIntExternalHeight: num.tryParse(text)), ref),
-          ),
-          BaseTextFormField(
-            labelText: "Lap külméret magasság",
-            keyBoardType: TextInputType.number,
-            onChanged: (text) => updateDoor(door.copyWith(corrIntExternalHeight: num.tryParse(text)), ref),
-          ),
-        ],
-      ),
+      if (door.corrosionIntegrity == null || door.corrosionIntegrity == OkNotOk.ok)
+        SizedBox()
+      else
+        Column(
+          children: [
+            BaseTextFormField(
+              labelText: "Mi a hiba?",
+              keyBoardType: TextInputType.number,
+              onChanged: (text) => updateDoor(door.copyWith(corrIntIssue: text), ref),
+            ),
+            YesNoField(
+                labelText: "Javítható?", onChanged: (text) => updateDoor(door.copyWith(corrIntFixable: text), ref)),
+          ],
+        ),
+      if (door.corrIntFixable == null || door.corrIntFixable!)
+        SizedBox()
+      else
+        Column(
+          children: [
+            BaseTextFormField(
+              labelText: "Hogyan?",
+              keyBoardType: TextInputType.number,
+              onChanged: (text) => updateDoor(door.copyWith(corrIntFix: text), ref),
+            ),
+            BaseTextFormField(
+              labelText: "TBM szélessége",
+              keyBoardType: TextInputType.number,
+              onChanged: (text) => updateDoor(door.copyWith(corrIntTBMWidth: num.tryParse(text)), ref),
+            ),
+            BaseTextFormField(
+              labelText: "TBM magassága",
+              keyBoardType: TextInputType.number,
+              onChanged: (text) => updateDoor(door.copyWith(corrIntTBMHeight: num.tryParse(text)), ref),
+            ),
+            BaseTextFormField(
+              labelText: "Lap falcméret szélessége",
+              keyBoardType: TextInputType.number,
+              onChanged: (text) => updateDoor(door.copyWith(corrIntRebateWidth: num.tryParse(text)), ref),
+            ),
+            BaseTextFormField(
+              labelText: "Lap falcméret magasság",
+              keyBoardType: TextInputType.number,
+              onChanged: (text) => updateDoor(door.copyWith(corrIntRebateHeight: num.tryParse(text)), ref),
+            ),
+            BaseTextFormField(
+              labelText: "Lap külméret szélessége",
+              keyBoardType: TextInputType.number,
+              onChanged: (text) => updateDoor(door.copyWith(corrIntExternalHeight: num.tryParse(text)), ref),
+            ),
+            BaseTextFormField(
+              labelText: "Lap külméret magasság",
+              keyBoardType: TextInputType.number,
+              onChanged: (text) => updateDoor(door.copyWith(corrIntExternalHeight: num.tryParse(text)), ref),
+            ),
+          ],
+        ),
     ];
   }
 }

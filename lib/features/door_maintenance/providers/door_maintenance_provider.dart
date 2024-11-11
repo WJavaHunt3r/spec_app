@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:spec_app/app/enums/maintenance_mode.dart';
 import 'package:spec_app/app/enums/model_state.dart';
@@ -12,9 +13,11 @@ final doorMaintenanceDataProvider =
 class DoorMaintenanceDataNotifier extends StateNotifier<DoorMaintenanceState> {
   DoorMaintenanceDataNotifier() : super(DoorMaintenanceState()) {
     doors = FirebaseFirestore.instance.collection('doors');
+    FirebaseStorage.instance.ref();
   }
 
   late final CollectionReference doors;
+  late final Reference storageRef;
 
   Future<void> saveProject() async {
     state = state.copyWith(modelState: ModelState.processing);

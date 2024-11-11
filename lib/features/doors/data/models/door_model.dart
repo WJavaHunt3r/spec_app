@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:spec_app/app/enums/ok_not_ok.dart';
 
 part 'door_model.freezed.dart';
 
@@ -18,7 +19,7 @@ class DoorModel with _$DoorModel {
       num? doorWidth,
       num? doorHeight,
       String? prodYear,
-      String? corrosionIntegrity,
+      OkNotOk? corrosionIntegrity,
       List<String>? corrImageLinks,
       String? corrIntIssue,
       bool? corrIntFixable,
@@ -27,7 +28,7 @@ class DoorModel with _$DoorModel {
       num? corrIntTBMHeight,
       num? corrIntRebateWidth,
       num? corrIntRebateHeight,
-      num? corrIntExternalWidht,
+      num? corrIntExternalWidth,
       num? corrIntExternalHeight}) = _DoorModel;
 
   factory DoorModel.fromJson(Map<String, dynamic> json) => _$DoorModelFromJson(json);

@@ -11,6 +11,7 @@ class DoorMaintenanceLayout extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var currentStep = ref.watch(doorMaintenanceDataProvider).currentStep;
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Align(
         alignment: Alignment.topCenter,
         child: Container(
@@ -18,6 +19,32 @@ class DoorMaintenanceLayout extends ConsumerWidget {
           child: Stepper(
             steps: steps,
             type: StepperType.vertical,
+            controlsBuilder: (BuildContext context, details) {
+              return Row(
+                children: <Widget>[
+                  TextButton(
+                      onPressed: details.onStepContinue,
+                      style: ButtonStyle(
+                        foregroundColor: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
+                          return states.contains(WidgetState.disabled) ? null : (colorScheme.onPrimary);
+                        }),
+                        backgroundColor: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
+                          return states.contains(WidgetState.disabled) ? null : colorScheme.primary;
+                        }),
+                        // padding: const WidgetStatePropertyAll<EdgeInsetsGeometry>(buttonPadding),
+                        // shape: const WidgetStatePropertyAll<OutlinedBorder>(buttonShape),
+                      ),
+                      child: const Text('Következő')),
+                  Container(
+                    margin: const EdgeInsetsDirectional.only(start: 8.0),
+                    child: TextButton(
+                      onPressed: details.onStepCancel,
+                      child: const Text('Vissza'),
+                    ),
+                  ),
+                ],
+              );
+            },
             currentStep: currentStep,
             onStepContinue: currentStep == steps.length - 1
                 ? null
