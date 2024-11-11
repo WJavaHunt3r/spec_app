@@ -1,0 +1,3 @@
+enum OkNotOk{
+  ok, notOk
+}

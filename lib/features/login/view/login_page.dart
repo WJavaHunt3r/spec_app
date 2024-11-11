@@ -7,8 +7,12 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(),
-      body: Container(padding: EdgeInsets.all(8), child: LoginLayout(),),
+      body: Container(
+        padding: EdgeInsets.only(left: 8, right: 8),
+        child: LoginLayout(),
+      ),
     );
   }
 }

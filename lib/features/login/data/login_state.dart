@@ -9,8 +9,9 @@ part 'login_state.freezed.dart';
 abstract class LoginState with _$LoginState {
   const factory LoginState(
       {@Default("") String username,
+      UserModel? selectedUser,
       @Default("") String password,
-        @Default([]) List<UserModel> users,
+      @Default([]) List<UserModel> users,
       @Default(ModelState.empty) ModelState modelState,
       @Default("") String message}) = _LoginState;
 

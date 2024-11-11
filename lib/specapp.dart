@@ -12,7 +12,7 @@ class SpecApp extends ConsumerWidget {
         title: 'SpecApp',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
+          colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFD32F2F)),
           useMaterial3: true,
         ),
         routerConfig: router,

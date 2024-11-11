@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spec_app/app/providers/user_provider.dart';
+import 'package:spec_app/features/door_maintenance/view/door_maintenance_layout.dart';
+import 'package:spec_app/features/door_maintenance/view/door_maintenance_page.dart';
+import 'package:spec_app/features/doors/view/doors_page.dart';
 import 'package:spec_app/features/projects/view/projects_page.dart';
 import 'package:spec_app/features/users/data/model/user_model.dart';
 
@@ -17,8 +20,20 @@ final routerProvider = Provider<GoRouter>((ref) {
           builder: (BuildContext context, GoRouterState state) => ProjectsPage(),
         ),
         GoRoute(
-          path: '/home',
+          path: '/projects',
           builder: (BuildContext context, GoRouterState state) => ProjectsPage(),
+          routes: [
+            GoRoute(
+              path: ':id',
+              builder: (BuildContext context, GoRouterState state) => DoorsPage(),
+              routes: [
+                GoRoute(
+                  path: 'door',
+                  builder: (BuildContext context, GoRouterState state) => DoorMaintenancePage(),
+                ),
+              ]
+            ),
+          ]
         ),
         GoRoute(
           path: '/login',
