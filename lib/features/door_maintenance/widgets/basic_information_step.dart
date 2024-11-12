@@ -14,19 +14,23 @@ class BasicInformationStep extends BaseStep {
     var door = ref.watch(doorMaintenanceDataProvider).door;
     return [
       BaseTextFormField(
+        initialValue: door.structureType,
         labelText: "Szerkezet típusa",
         autofocus: true,
         onChanged: (text) => updateDoor(door.copyWith(structureType: text), ref),
       ),
       BaseDropdownField<num>(
+        initialValue: door.fireResistanceRating,
         labelText: "Tűzállósági rátája",
         items: [0, 30, 60, 90, 120].map((e) => DropdownMenuItem<num>(value: e, child: Text(e.toString()))).toList(),
-        onChanged: (text) => updateDoor(door.copyWith(structureType: text.toString()), ref),
+        onChanged: (text) => updateDoor(door.copyWith(fireResistanceRating: text), ref),
       ),
       YesNoField(
+          initialValue: door.escapeRoute,
           labelText: "Menekülési útvonalon helyezkedik el?",
           onChanged: (text) => updateDoor(door.copyWith(escapeRoute: text), ref)),
       YesNoField(
+          initialValue: door.smokeControlFunction,
           labelText: "Füstgátló funkciót tölt-e be?",
           onChanged: (text) => updateDoor(door.copyWith(smokeControlFunction: text), ref)),
       // BaseDropdownField<num>(
@@ -36,26 +40,31 @@ class BasicInformationStep extends BaseStep {
       //   }).map((e) => DropdownMenuItem<num>(value: e, child: Text(e.toString()))).toList(),
       //   onChanged: (text) => updateDoor(door.copyWith(structureType: text.toString()), ref),
       // ),
-      BaseTextFormField(
+      BaseTextFormField<num>(
+        initialValue: door.doorNumber,
         labelText: "Ajtószám",
         keyBoardType: TextInputType.number,
         onChanged: (text) => updateDoor(door.copyWith(doorNumber: num.tryParse(text)), ref),
       ),
       BaseTextFormField(
+        initialValue: door.doorName,
         labelText: "Ajtó megnevezése",
         onChanged: (text) => updateDoor(door.copyWith(doorName: text), ref),
       ),
-      BaseTextFormField(
+      BaseTextFormField<num>(
+        initialValue: door.doorWidth,
         labelText: "Ajtó/Kapuméret - szélesség",
         keyBoardType: TextInputType.number,
         onChanged: (text) => updateDoor(door.copyWith(doorWidth: num.tryParse(text)), ref),
       ),
-      BaseTextFormField(
+      BaseTextFormField<num>(
+        initialValue: door.doorHeight,
         labelText: "Ajtó/Kapuméret - magasság",
         keyBoardType: TextInputType.number,
         onChanged: (text) => updateDoor(door.copyWith(doorHeight: num.tryParse(text)), ref),
       ),
       BaseDropdownField<String>(
+        initialValue: door.prodYear,
         labelText: "Gyártási év",
         items: [
           "2000 előtt",

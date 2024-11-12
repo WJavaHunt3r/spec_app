@@ -64,8 +64,9 @@ class DoorsLayout extends ConsumerWidget {
                       var current = doors[index];
                       return Card(
                           child: ListTile(
-                        leading: Text(current.doorNumber.toString()),
-                        title: Text("${current.doorName} (${current.doorWidth} x ${current.doorHeight})"),
+                        leading: Text(convertNull(current.doorNumber)),
+                        title: Text(
+                            "${current.doorName} (${convertNull(current.doorWidth)} x ${convertNull(current.doorHeight)})"),
                         subtitle:
                             Text("${current.prodYear} - ${current.fireResistanceRating} - ${current.structureType}"),
                         trailing: Icon(Icons.arrow_forward_ios_rounded),
@@ -85,4 +86,6 @@ class DoorsLayout extends ConsumerWidget {
       ],
     );
   }
+
+  String convertNull(dynamic value) => value == null ? "" : value.toString();
 }

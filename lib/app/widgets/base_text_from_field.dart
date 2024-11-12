@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BaseTextFormField extends StatefulWidget {
+class BaseTextFormField<T> extends StatefulWidget {
   const BaseTextFormField(
       {super.key,
       this.initialValue,
@@ -23,7 +23,7 @@ class BaseTextFormField extends StatefulWidget {
       this.prefixIcon,
       this.errorText});
 
-  final String? initialValue;
+  final T? initialValue;
   final String labelText;
   final String? errorText;
   final bool enabled;
@@ -73,7 +73,7 @@ class _BaseTextFormFieldState extends State<BaseTextFormField> {
         textAlign: widget.textAlign,
         controller: widget.controller,
         keyboardType: widget.keyBoardType,
-        initialValue: widget.initialValue,
+        initialValue: widget.initialValue == null ? "" : widget.initialValue.toString(),
         autofocus: widget.autofocus,
         textInputAction: widget.textInputAction,
         obscureText: _isObscured,
