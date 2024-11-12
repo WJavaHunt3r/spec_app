@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spec_app/features/door_maintenance/providers/door_maintenance_provider.dart';
 import 'package:spec_app/features/door_maintenance/widgets/basic_information_step.dart';
+import 'package:spec_app/features/door_maintenance/widgets/case_corrosion_integrity_step.dart';
 import 'package:spec_app/features/door_maintenance/widgets/corrosion_integrity_step.dart';
+import 'package:spec_app/features/door_maintenance/widgets/seal_integrity_step.dart';
 
 class DoorMaintenanceLayout extends ConsumerWidget {
   DoorMaintenanceLayout({super.key});
@@ -68,6 +70,18 @@ class DoorMaintenanceLayout extends ConsumerWidget {
         content: CorrosionIntegrityStep(),
         title: Text(
           "Ajtólap mechanikai és korróziós épsége",
+          style: TextStyle(overflow: TextOverflow.ellipsis),
+        )),
+    Step(
+        content: CaseCorrosionIntegrityStep(),
+        title: Text(
+          "Tok mechanikai és korróziós épsége",
+          style: TextStyle(overflow: TextOverflow.ellipsis),
+        )),
+    Step(
+        content: SealIntegrityStep(),
+        title: Text(
+          "Zár állapota/működése",
           style: TextStyle(overflow: TextOverflow.ellipsis),
         ))
   ];

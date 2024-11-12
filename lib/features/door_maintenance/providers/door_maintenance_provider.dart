@@ -1,3 +1,6 @@
+import 'dart:ffi';
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -8,8 +11,7 @@ import 'package:spec_app/features/door_maintenance/data/state/door_maintenance_s
 import 'package:spec_app/features/doors/data/models/door_model.dart';
 
 final doorMaintenanceDataProvider =
-    StateNotifierProvider<DoorMaintenanceDataNotifier, DoorMaintenanceState>(
-        (ref) => DoorMaintenanceDataNotifier());
+    StateNotifierProvider<DoorMaintenanceDataNotifier, DoorMaintenanceState>((ref) => DoorMaintenanceDataNotifier());
 
 class DoorMaintenanceDataNotifier extends StateNotifier<DoorMaintenanceState> {
   DoorMaintenanceDataNotifier() : super(DoorMaintenanceState()) {
@@ -62,8 +64,7 @@ class DoorMaintenanceDataNotifier extends StateNotifier<DoorMaintenanceState> {
     state = state.copyWith(currentStep: step);
   }
 
-
-  Future<void> uploadImage() async {
+  Future<void> uploadImage(List<String> imageLinks, List<Uint8List> stateImages) async {
     try {
       FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
         type: FileType.image,
@@ -77,15 +78,35 @@ class DoorMaintenanceDataNotifier extends StateNotifier<DoorMaintenanceState> {
           var imgRef = storageRef.child(filePath);
           var task = imgRef.putData(file.bytes!);
 
-          var imageLinks = <String>[...state.door.corrImageLinks ?? []];
           imageLinks.add(filePath);
-          var images = [...state.corrImages];
-          images.add(file.bytes!);
-          state = state.copyWith(door: state.door.copyWith(corrImageLinks: imageLinks), corrImages: images);
+          // var images = [...state.corrImages];
+          stateImages.add(file.bytes!);
         }
       }
     } catch (e) {
       state = state.copyWith(modelState: ModelState.error, message: "Not supported: ${e.toString()}");
     }
+  }
+
+  Future<void> uploadCorrImages() async {
+    var corImageLinks = <String>[...state.door.corrImageLinks ?? []];
+    var corImages = [...state.corrImages];
+    uploadImage(corImageLinks, corImages);
+    state = state.copyWith(door: state.door.copyWith(corrImageLinks: corImageLinks), corrImages: corImages);
+  }
+
+  Future<void> uploadCaseCorrImages() async {
+    var caseCorrImageLinks = <String>[...state.door.caseCorrImageLinks ?? []];
+    var caseCorrImages = [...state.caseCorrImages];
+    uploadImage(caseCorrImageLinks, caseCorrImages);
+    state = state.copyWith(
+        door: state.door.copyWith(caseCorrImageLinks: caseCorrImageLinks), caseCorrImages: caseCorrImages);
+  }
+
+  Future<void> uploadSealImages() async {
+    var sealImageLinks = <String>[...state.door.sealImageLinks ?? []];
+    var sealImages = [...state.sealImages];
+    uploadImage(sealImageLinks, sealImages);
+    state = state.copyWith(door: state.door.copyWith(sealImageLinks: sealImageLinks), sealImages: sealImages);
   }
 }

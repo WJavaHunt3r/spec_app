@@ -13,6 +13,8 @@ abstract class DoorMaintenanceState with _$DoorMaintenanceState {
       @Default(0) int currentStep,
       MaintenanceMode? mode,
       @Default([]) List<Uint8List> corrImages,
+        @Default([]) List<Uint8List> caseCorrImages,
+        @Default([]) List<Uint8List> sealImages,
       @Default(ModelState.empty) ModelState modelState,
       @Default("") String message}) = _DoorMaintenanceState;
 
