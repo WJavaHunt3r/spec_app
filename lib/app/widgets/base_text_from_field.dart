@@ -21,13 +21,15 @@ class BaseTextFormField<T> extends StatefulWidget {
       this.onFieldSubmitted,
       this.isPasswordField = false,
       this.prefixIcon,
-      this.errorText});
+      this.errorText,
+      this.maxLines});
 
   final T? initialValue;
   final String labelText;
   final String? errorText;
   final bool enabled;
   final bool autofocus;
+  final int? maxLines;
   final TextAlign textAlign;
   final TextInputType keyBoardType;
   final TextEditingController? controller;
@@ -67,6 +69,7 @@ class _BaseTextFormFieldState extends State<BaseTextFormField> {
     return Padding(
       padding: EdgeInsets.only(top: 4, bottom: 4),
       child: TextFormField(
+        maxLines: widget.obscureText ? 1 : widget.maxLines,
         autofillHints: widget.autofillHints,
         focusNode: widget.focusNode,
         enabled: widget.enabled,

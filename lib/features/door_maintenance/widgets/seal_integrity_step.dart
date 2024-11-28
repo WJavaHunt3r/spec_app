@@ -32,6 +32,7 @@ class SealIntegrityStep extends BaseStep {
             BaseTextFormField(
               initialValue: door.sealIssue,
               labelText: "Mi a hiba?",
+              maxLines: 3,
               onChanged: (text) => updateDoor(door.copyWith(sealIssue: text), ref),
             ),
             YesNoField(
@@ -40,16 +41,18 @@ class SealIntegrityStep extends BaseStep {
                 onChanged: (text) => updateDoor(door.copyWith(sealFixable: text), ref)),
           ],
         ),
-      if (door.sealFixable == null || door.sealFixable!)
+      if (door.sealFixable == null)
         SizedBox()
+      else if (door.sealFixable!)
+        BaseTextFormField(
+          initialValue: door.sealFix,
+          maxLines: 3,
+          labelText: "Hogyan?",
+          onChanged: (text) => updateDoor(door.copyWith(sealFix: text), ref),
+        )
       else
         Column(
           children: [
-            BaseTextFormField(
-              initialValue: door.sealFix,
-              labelText: "Hogyan?",
-              onChanged: (text) => updateDoor(door.copyWith(sealFix: text), ref),
-            ),
             BaseTextFormField<num>(
               initialValue: door.sealDepth,
               labelText: "Zár mélyésge",

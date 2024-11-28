@@ -1,7 +1,7 @@
 name: spec_app
 description: "SpecDoor app"
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 1.0.0+1
+version: 1.0.1+2
 
 environment:
   sdk: ^3.5.4-85.0.dev

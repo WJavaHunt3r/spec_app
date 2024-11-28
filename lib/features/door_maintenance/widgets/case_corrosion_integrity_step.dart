@@ -33,6 +33,7 @@ class CaseCorrosionIntegrityStep extends BaseStep {
             BaseTextFormField(
               initialValue: door.caseCorrIntIssue,
               labelText: "Mi a hiba?",
+              maxLines: 3,
               onChanged: (text) => updateDoor(door.copyWith(caseCorrIntIssue: text), ref),
             ),
             YesNoField(
@@ -41,16 +42,18 @@ class CaseCorrosionIntegrityStep extends BaseStep {
                 onChanged: (text) => updateDoor(door.copyWith(caseCorrIntFixable: text), ref)),
           ],
         ),
-      if (door.caseCorrIntFixable == null || door.caseCorrIntFixable!)
+      if (door.caseCorrIntFixable == null)
         SizedBox()
+      else if (door.caseCorrIntFixable!)
+        BaseTextFormField(
+          initialValue: door.caseCorrIntFix,
+          maxLines: 3,
+          labelText: "Hogyan?",
+          onChanged: (text) => updateDoor(door.copyWith(caseCorrIntFix: text), ref),
+        )
       else
         Column(
           children: [
-            BaseTextFormField(
-              initialValue: door.caseCorrIntFix,
-              labelText: "Hogyan?",
-              onChanged: (text) => updateDoor(door.copyWith(caseCorrIntFix: text), ref),
-            ),
             BaseTextFormField<num>(
               initialValue: door.caseCorrIntTBMWidth,
               labelText: "TBM szélessége",
@@ -91,6 +94,7 @@ class CaseCorrosionIntegrityStep extends BaseStep {
             ),
             BaseTextFormField(
               initialValue: door.caseCorrIntComment,
+              maxLines: 3,
               labelText: "Megjegyzés a beépítéssel kapcsolatban!",
               onChanged: (text) => updateDoor(door.copyWith(caseCorrIntComment: text), ref),
             ),
@@ -113,7 +117,7 @@ class CaseCorrosionIntegrityStep extends BaseStep {
             ),
             BaseTextFormField(
               initialValue: door.caseCorrIntRubbleShipping,
-              labelText: "Kiszerelt ajtó elszállítása szükséges?",
+              labelText: "Sitt elszállítás útvonala",
               onChanged: (text) => updateDoor(door.copyWith(caseCorrIntRubbleShipping: text), ref),
             ),
             BaseTextFormField(

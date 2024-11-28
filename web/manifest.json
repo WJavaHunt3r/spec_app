@@ -1,5 +1,5 @@
 {
-    "name": "spec_app",
+    "name": "SpecApp",
     "short_name": "spec_app",
     "start_url": ".",
     "display": "standalone",
@@ -20,13 +20,13 @@
             "type": "image/png"
         },
         {
-            "src": "icons/Icon-maskable-192.png",
+            "src": "icons/Icon-192-maskable.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "maskable"
         },
         {
-            "src": "icons/Icon-maskable-512.png",
+            "src": "icons/Icon-512-maskable.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"

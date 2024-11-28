@@ -11,6 +11,7 @@ class ConfirmAlertDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return AlertDialog(
         title: Text(
           title,
@@ -20,14 +21,19 @@ class ConfirmAlertDialog extends StatelessWidget {
         actionsAlignment: MainAxisAlignment.spaceBetween,
         actions: [
           TextButton(
-              style: ButtonStyle(
-                backgroundColor: WidgetStateColor.resolveWith((states) => Colors.transparent),
-              ),
               onPressed: () => context.pop(),
               child: Text(
                 "Mégsem",
               )),
           TextButton(
+              style: ButtonStyle(
+                foregroundColor: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
+                  return states.contains(WidgetState.disabled) ? null : (colorScheme.onPrimary);
+                }),
+                backgroundColor: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
+                  return states.contains(WidgetState.disabled) ? null : colorScheme.primary;
+                }),
+              ),
               onPressed: onConfirm,
               child: Text(
                 "Rendben",

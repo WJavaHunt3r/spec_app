@@ -32,6 +32,7 @@ class CorrosionIntegrityStep extends BaseStep {
             BaseTextFormField(
               initialValue: door.corrIntIssue,
               labelText: "Mi a hiba?",
+              maxLines: 3,
               onChanged: (text) => updateDoor(door.copyWith(corrIntIssue: text), ref),
             ),
             YesNoField(
@@ -40,16 +41,18 @@ class CorrosionIntegrityStep extends BaseStep {
                 onChanged: (text) => updateDoor(door.copyWith(corrIntFixable: text), ref)),
           ],
         ),
-      if (door.corrIntFixable == null || door.corrIntFixable!)
+      if (door.corrIntFixable == null)
         SizedBox()
+      else if (door.corrIntFixable!)
+        BaseTextFormField(
+          initialValue: door.corrIntFix,
+          maxLines: 3,
+          labelText: "Hogyan?",
+          onChanged: (text) => updateDoor(door.copyWith(corrIntFix: text), ref),
+        )
       else
         Column(
           children: [
-            BaseTextFormField(
-              initialValue: door.corrIntFix,
-              labelText: "Hogyan?",
-              onChanged: (text) => updateDoor(door.copyWith(corrIntFix: text), ref),
-            ),
             BaseTextFormField<num>(
               initialValue: door.corrIntTBMWidth,
               labelText: "TBM szélessége",

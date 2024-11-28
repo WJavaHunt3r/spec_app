@@ -41,11 +41,11 @@ class DoorMaintenancePage extends ConsumerWidget {
             return ConfirmAlertDialog(
               onConfirm: () => buildContext.pop(true),
               title: "Kilépés",
-              content: Text("Mented a módosításokat", textAlign: TextAlign.center),
+              content: Text("A nem mented módosításaid elvesznek!", textAlign: TextAlign.center),
             );
           }).then((popped) {
         if (context.mounted && (popped ?? false)) {
-          ref.watch(doorMaintenanceDataProvider.notifier).saveProject();
+          ref.read(doorMaintenanceDataProvider.notifier).clear();
           context.pop();
         }
       });

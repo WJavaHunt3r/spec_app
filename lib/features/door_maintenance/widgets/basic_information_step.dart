@@ -9,6 +9,8 @@ import 'package:spec_app/features/door_maintenance/widgets/base_step.dart';
 class BasicInformationStep extends BaseStep {
   const BasicInformationStep({super.key});
 
+  static final basicFormKey = GlobalKey<FormState>();
+
   @override
   List<Widget> buildWidgets(BuildContext context, WidgetRef ref) {
     var door = ref.watch(doorMaintenanceDataProvider).door;
