@@ -3,17 +3,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spec_app/app/enums/maintenance_mode.dart';
 import 'package:spec_app/app/enums/model_state.dart';
+import 'package:spec_app/app/widgets/confirm_alert_dialog.dart';
 import 'package:spec_app/features/door_maintenance/providers/door_maintenance_provider.dart';
+import 'package:spec_app/features/doors/data/models/door_model.dart';
 import 'package:spec_app/features/doors/providers/doors_provider.dart';
 
 class DoorsLayout extends ConsumerWidget {
   const DoorsLayout({super.key});
 
+  static const String edit = 'Módosítás';
+  static const String print = 'Nyomtatás';
+  static const String delete = 'Törlés';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var doors = ref.watch(doorsDataProvider).doors;
     var project = ref.watch(doorsDataProvider).project;
-    var headerStyle = TextStyle(fontSize: 18, color: Colors.white);
+    var headerStyle = TextStyle(fontSize: 18);
     return Stack(
       children: [
         RefreshIndicator(
@@ -21,7 +27,6 @@ class DoorsLayout extends ConsumerWidget {
             child: Column(
               children: [
                 Card(
-                  color: Theme.of(context).colorScheme.secondary,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -57,24 +62,37 @@ class DoorsLayout extends ConsumerWidget {
                     ),
                   ),
                 ),
-                ListView.builder(
+                ListView.separated(
                     shrinkWrap: true,
+                    separatorBuilder: (context, index) => Divider(
+                          indent: 20,
+                          endIndent: 20,
+                        ),
                     itemCount: doors.length,
                     itemBuilder: (context, index) {
                       var current = doors[index];
-                      return Card(
-                          child: ListTile(
+                      return ListTile(
                         leading: Text(convertNull(current.doorNumber)),
                         title: Text(
                             "${current.doorName} (${convertNull(current.doorWidth)} x ${convertNull(current.doorHeight)})"),
                         subtitle:
                             Text("${current.prodYear} - ${current.fireResistanceRating} - ${current.structureType}"),
-                        trailing: Icon(Icons.arrow_forward_ios_rounded),
+                        trailing: PopupMenuButton<String>(
+                            icon: const Icon(Icons.more_vert, color: Colors.black),
+                            onSelected: (value) {
+                              handleSelection(ref, value, context, project.id, current);
+                            },
+                            color: Colors.white,
+                            surfaceTintColor: Colors.white,
+                            itemBuilder: (BuildContext buildContext) {
+                              return {edit, delete, print}.map((String choice) {
+                                return PopupMenuItem<String>(value: choice, child: Text(choice));
+                              }).toList();
+                            }),
                         onTap: () {
-                          ref.read(doorMaintenanceDataProvider.notifier).setDoor(current, MaintenanceMode.edit);
-                          context.push("/projects/${project.id}/door");
+                          onTap(ref, context, current, project.id!);
                         },
-                      ));
+                      );
                     }),
               ],
             )),
@@ -87,5 +105,29 @@ class DoorsLayout extends ConsumerWidget {
     );
   }
 
+  void onTap(WidgetRef ref, BuildContext context, DoorModel door, String id) {
+    ref.read(doorMaintenanceDataProvider.notifier).setDoor(door, MaintenanceMode.edit);
+    context.push("/projects/$id/door");
+  }
+
   String convertNull(dynamic value) => value == null ? "" : value.toString();
+
+  void handleSelection(WidgetRef ref, String value, BuildContext context, String? id, DoorModel door) {
+    switch (value) {
+      case edit:
+        onTap(ref, context, door, id!);
+        break;
+      case delete:
+        showDialog(
+            context: context,
+            builder: (builder) => ConfirmAlertDialog(
+                  onConfirm: () => context.pop(true),
+                  title: "Törlés",
+                  content: Text("Biztosan törlöd az ajtót?", textAlign: TextAlign.center),
+                ));
+        break;
+      case print:
+        break;
+    }
+  }
 }
